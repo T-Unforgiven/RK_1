@@ -67,8 +67,6 @@ public :
     void insert(int nameNode, int position);
 };
 
-//8 не доделана, так как не ясно, что должна делать функция printInfoStudent()
-
 class StudentInfo {
 private :
     std::tuple<std::string /*фамилия*/,std::string /*имя*/,char* /*№ студ билета*/> info;
@@ -102,7 +100,7 @@ public :
         author		:
         date		:
     */
-    void printInfoStudent();
+    void printInfoStudent(bool writeFile = false);
     /*	desription	:	запись данных в файл формат файла
                             [Фамилия] [имя] : [номер билета]
                                 [предмет 1]	:	[оценка 1], [оценка 2],... [оценка N] -- [среднее значение]

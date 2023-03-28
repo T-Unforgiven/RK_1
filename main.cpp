@@ -30,15 +30,25 @@ void task_5(){
 }
 
 int Node::countNodes = 0;
+LinkedList lst;
 
-void task_6_7(){
-    LinkedList lst;
+void task_6(){
     for (int i = 0; i < 5; ++i) {
         lst.push_back(2 * i);
     }
-    lst.insert(8, 3);
     lst.writeToFileFromHead();
     lst.writeToFileFromTail();
+}
+
+void task_7(){
+    lst.insert(8, 3);
+}
+
+void task_8(){
+    StudentInfo test;
+    test.addSubj("OP");
+    test.addMark("OP", 5);
+    test.writeAllInfoToFile();
 }
 
 int main() {
@@ -47,7 +57,8 @@ int main() {
     task_3();
     task_4();
     task_5();
-    task_6_7();
-
+    task_6();
+    task_7();
+    task_8();
     return 0;
 }

@@ -1,5 +1,6 @@
 #include <cstring>
 #include <map>
+#include <fstream>
 #include "tasks_rk1.h"
 
 char* NewChar(const char* s){
@@ -185,17 +186,17 @@ LinkedList::~LinkedList() {
     }
 }
 
-void LinkedList::push_back(int value) {
+void LinkedList::push_back(int nameNode) {
     Node *Element = new Node;
     if(Head == nullptr) {
-        Element->nameNode = value + 1;
+        Element->nameNode = nameNode + 1;
         Element->next = nullptr;
         Element->prev = nullptr;
         Head = Tail = Element;
     }
     else{
         Element->next = nullptr;
-        Element->nameNode = value + 1;
+        Element->nameNode = nameNode + 1;
         Element->prev = Tail;
         Tail->next = Element;
         Tail = Element;
@@ -277,4 +278,28 @@ int StudentInfo::addSubj(const std::string &subjName) {
     pair.second = aver;
     subjMark.emplace(subjName, pair);
     return 0;
+}
+
+void StudentInfo::printInfoStudent(bool writeFile) {
+    if(!writeFile) {
+        FILE *pFile = fopen("Student.txt", "w");
+        std::string s = std::get<0>(info);
+        std::string s1 = std::get<1>(info);
+        std::string s2 = std::get<2>(info);
+        fprintf(pFile, "%s\t%s%c%s\n", s.c_str(), s1.c_str(), ':', s2.c_str());
+        for (auto it = subjMark.begin(); it != subjMark.end(); it++) {
+            fprintf(pFile, "%s%s", it->first.c_str(), " :\t");
+            for (auto it1 = it->second.first.begin(); it1 != it->second.first.end(); it1++) {
+                fprintf(pFile, "%d%s", *it1, ", ");
+            }
+            fprintf(pFile, "%s%f\n", " -- ", it->second.second);
+        }
+        fclose(pFile);
+    }
+}
+
+void StudentInfo::writeAllInfoToFile() {
+    std::ofstream out("AllInfo.txt", std::ios::binary);
+    out.write((char*)&info, sizeof(info));
+    out.close();
 }
