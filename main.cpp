@@ -6,15 +6,16 @@ void task_1() {
 }
 
 void task_2(){
-    writeToFile("result_task2.txt", convertDecToBin(30));
+    char* aaa = new char[256]{"result_task2.txt\0"};
+    writeToFile(*aaa, convertDecToBin(67));
 }
 
 void task_3(){
-    writeToFile("result_task3.txt", 0, convertBinToHex("1000110101111"), "1000110101111");
+    writeToFile("result_task3.txt", 0, convertBinToHex("0000000001101"), "0000000001101");
 }
 
 void task_4(){
-    buildTree(8);
+    buildTree(5);
 }
 
 void task_5(){
@@ -22,10 +23,13 @@ void task_5(){
     for (int i = 0; i < 5; ++i) {
         randFill(Matrix[i], 5);
     }
-    std::vector<std::pair<int, float>> vec = averStr2DArray(*Matrix, 5, 5);
+    std::vector<float> vec = averStr2DArray(*Matrix, 5, 5);
     FILE* pFile = fopen("result_task5.txt", "w");
-    for (auto i: vec)
-        fprintf(pFile, "%d\t%c\t%f\n", i.first, ':', i.second);
+    int v = 0;
+    for (auto i: vec) {
+        fprintf(pFile, "%d\t%c\t%f\n", v, ':', i);
+        v++;
+    }
     fclose(pFile);
 }
 

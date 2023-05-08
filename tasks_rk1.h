@@ -14,7 +14,7 @@ char* NewChar(const char* s);
 
 class WorkWithFile {
 private :
-    char* dataOfFile = new char[20];
+    char* dataOfFile = new char[256];
 
     void readFromFile(const char* fileName);
 
@@ -23,6 +23,8 @@ private :
 public :
     WorkWithFile(const char* fileName);
 
+    WorkWithFile();
+
     ~WorkWithFile();
 
     void writeStatInfoToFile(const char* outFile);
@@ -30,7 +32,7 @@ public :
 
 char* convertDecToBin(int number);
 
-void writeToFile(const char* fileName, const char* strNum);
+void writeToFile(const char& fileName, const char* strNum);
 
 void buildTree(int height);
 
@@ -38,7 +40,7 @@ char* convertBinToHex(const char* binNum);
 
 void writeToFile(const char* fileName, int writeAppend, const char* hexNum, const char* binNum);
 
-std::vector<std::pair<int, float>> averStr2DArray(const float* ar, int colCount, int rowCount);
+std::vector<float> averStr2DArray(const float* ar, int colCount, int rowCount);
 
 void randFill(float* ar, int N);
 

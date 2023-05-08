@@ -24,10 +24,16 @@ char* NewChar(const char* s){
 }
 
 void WorkWithFile::readFromFile(const char *fileName) {
-    FILE* pFile;
-    pFile = fopen(fileName, "r");
-    fscanf(pFile, "%s", dataOfFile);
-    fclose(pFile);
+    std::ifstream inf(fileName);
+    std::string s0;
+    std::string s1;
+    while(std::getline(inf,s1))
+        s0+=s1;
+    inf.close();
+    for (int i = 0; i < s0.length() ; ++i) {
+        dataOfFile[i] = s0[i];
+        dataOfFile[i+1] = '\0';
+    }
 }
 
 void WorkWithFile::prepareTestFile(const char *fileName) {
@@ -47,8 +53,11 @@ void WorkWithFile::prepareTestFile(const char *fileName) {
 }
 
 WorkWithFile::WorkWithFile(const char *fileName) {
-    prepareTestFile(fileName);
     readFromFile(fileName);
+}
+
+WorkWithFile::WorkWithFile() {
+    prepareTestFile("sourceFile_task1.txt");
 }
 
 WorkWithFile::~WorkWithFile() {
@@ -90,25 +99,39 @@ void buildTree(int height){
 }
 
 char* convertDecToBin(int number){
-    char* string = new char[33];
-    int count = 0;
-    for (int i = 32; number > 0; i--) {
-        string[i] = number%2 + '0';
-        number/=2;
-        count++;
+    if(number != 0) {
+        int CoolNum = abs(number);
+        char *string = new char[33];
+        int count = 0;
+        for (int i = 32; CoolNum > 0; i--) {
+            string[i] = CoolNum % 2 + '0';
+            CoolNum /= 2;
+            count++;
+        }
+        char *CoolString = new char[count];
+        int Index = 33 - count;
+        for (int i = 0; i < count; ++i) {
+            if (i == 0 && number < 0) {
+                CoolString[i] = '-';
+                count++;
+                continue;
+            }
+            CoolString[i] = string[Index++];
+            CoolString[i + 1] = '\0';
+        }
+        delete[]string;
+        return CoolString;
     }
-    char* CoolString = new char[count];
-    int Index = 33 - count;
-    for (int i = 0; i < count; ++i) {
-        CoolString[i] = string[Index++];
-        CoolString[i+1] = '\0';
+    else{
+        char* str1 = new char[2];
+        str1[0] = '0';
+        str1[1] = '\0';
+        return str1;
     }
-    delete[]string;
-    return CoolString;
 }
 
-void writeToFile(const char* fileName, const char* strNum){
-    FILE* pFile = fopen(fileName, "w");
+void writeToFile(const char& fileName, const char* strNum){
+    FILE* pFile = fopen(&fileName, "w");
     fprintf(pFile, "%s", strNum);
     fclose(pFile);
 }
@@ -145,6 +168,16 @@ char* convertBinToHex(const char* binNum){
     }
     hexNum[Index] = '\0';
     delete[] CoolBinNum;
+    int counter = 0;
+    for (int j = 0;hexNum[j] == '0' ; ++j) {
+        counter++;
+    }
+    for (int j = 0; j < counter; ++j) {
+        for (int k = 0; k < strlen(hexNum)-1; ++k) {
+            std::swap(hexNum[k], hexNum[k+1]);
+        }
+    }
+    hexNum[strlen(hexNum)-counter] = '\0';
     return hexNum;
 }
 
@@ -154,15 +187,15 @@ void writeToFile(const char* fileName, int writeAppend, const char* hexNum, cons
     fclose(pFile);
 }
 
-std::vector<std::pair<int, float>> averStr2DArray(const float* ar, int colCount, int rowCount){
-    std::vector<std::pair<int, float>> vec;
+std::vector<float> averStr2DArray(const float* ar, int colCount, int rowCount){
+    std::vector<float> vec;
     for (int i = 0; i < rowCount; ++i) {
         float sum = 0;
         for (int j = 0; j < colCount; ++j) {
             sum += (*(ar + (i*colCount) + j));
         }
         float average = sum/colCount;
-        vec.emplace_back(i,average);
+        vec.emplace_back(average);
     }
     return vec;
 }
