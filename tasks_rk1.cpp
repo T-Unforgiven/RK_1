@@ -336,3 +336,36 @@ void StudentInfo::writeAllInfoToFile() {
     out.write((char*)&info, sizeof(info));
     out.close();
 }
+
+bool brackets(const char* str){
+    std::map<char, char> m {{'(', ')'},{'[',']'},{'<','>'}, {'{','}'}};
+    FILO Stack;
+    for (int i = 0; i < strlen(str); ++i) {
+        bool IsBracket = false;
+        for (auto iter = m.begin(); iter != m.end(); iter++) {
+            if (iter->first == str[i] || iter->second == str[i]) {
+                IsBracket = true;
+                break;
+            }
+        }
+        if(IsBracket) {
+            bool OpenBracket = false;
+            for (auto iter = m.begin(); iter != m.end(); iter++) {
+                if (iter->first == str[i]) {
+                    Stack.AddEl(str[i]);
+                    OpenBracket = true;
+                    break;
+                }
+            }
+            if(!OpenBracket) {
+                char buf;
+                Stack.GetEl(buf);
+                if (m.find(buf)->second != str[i]) {
+                    Stack.AddEl(buf);
+                    Stack.AddEl(str[i]);
+                }
+            }
+        }
+    }
+    return Stack.IsEmpty();
+}

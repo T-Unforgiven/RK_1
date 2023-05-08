@@ -55,6 +55,36 @@ void task_8(){
     test.writeAllInfoToFile();
 }
 
+void task_9(){
+    bool OK = brackets("(<<>{((hehe))}[<<<>{}>()>]>)");
+    if(OK)
+        std::cout << "OK";
+    else
+        std::cout << "BAD";
+}
+
+void task_10(){
+    bool OK = true;
+    RingedBuffer<int> Buf(5);
+    Buf.AddEl(67);
+    int buf;
+    Buf.GetEl(buf);
+    if(buf != 67)
+        OK = false;
+    for (int i = 0; i < 100; ++i) {
+        Buf.AddEl(i+1);
+    }
+    for (int i = 0; i < 100; ++i) {
+        Buf.GetEl(buf);
+        if(buf != i+1)
+            OK = false;
+    }
+    if(OK)
+        std::cout << std::endl << "RingedBuffer works properly";
+    else
+        std::cout << std::endl << "RingedBuffer does not work properly";
+}
+
 int main() {
     task_1();
     task_2();
@@ -64,5 +94,7 @@ int main() {
     task_6();
     task_7();
     task_8();
+    task_9();
+    task_10();
     return 0;
 }

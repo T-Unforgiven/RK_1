@@ -115,4 +115,78 @@ public :
     void writeAllInfoToFile();
 };
 
+bool brackets(const char* str);
+
+class FILO {
+private:
+    int DataLen;
+    int size;
+    char* ar;
+public:
+    FILO(){
+        size = 256;
+        ar = new char[size];
+        DataLen = 0;
+    }
+
+    int AddEl(char element){
+        if(DataLen == size)
+            return -1;
+        ar[DataLen++] = element;
+        return 0;
+    }
+
+    int GetEl(char& element){
+        if(DataLen == 0)
+            return -1;
+        element =  ar[--DataLen];
+        return 0;
+    }
+
+    bool IsEmpty(){
+        return DataLen == 0;
+    }
+};
+
+template<typename T>
+class RingedBuffer{
+private:
+    int begin;
+    int end;
+    int DataLen;
+    int size;
+    T *ar;
+public:
+    RingedBuffer(){
+        begin = end = 0;
+        size = 256;
+        DataLen = 0;
+        ar = new T[size];
+    }
+    RingedBuffer(int FirstEl){
+        size = 256;
+        DataLen = 0;
+        ar = new T[size];
+        begin = end = FirstEl;
+    }
+    int AddEl(T element){
+        if(DataLen == size)
+            return -1;
+        ar[end] = element;
+        DataLen++;
+        end = (begin+DataLen)%size;
+        return 0;
+    }
+    int GetEl(T& element){
+        if(DataLen == 0)
+            return -1;
+        element = ar[begin++];
+        begin = begin%size;
+        DataLen--;
+        return 0;
+    }
+};
+
+
+
 #endif
