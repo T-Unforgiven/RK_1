@@ -33,7 +33,6 @@ void task_5(){
     fclose(pFile);
 }
 
-int Node::countNodes = 0;
 LinkedList lst;
 
 void task_6(){

@@ -3,6 +3,8 @@
 #include <fstream>
 #include "tasks_rk1.h"
 
+int Node::countNodes = 0;
+
 char* NewChar(const char* s){
     char* NewString = new char[20];
     int count = 0;
